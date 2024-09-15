@@ -7,7 +7,7 @@ const FruitList = () => {
   const [selectedFruit, setSelectedFruit] = useState(null);
   const [userMessage, setUserMessage] = useState("");
   const [chatHistory, setChatHistory] = useState([]);
-  const chatEndRef = useRef(null); // Reference for auto-scrolling
+  const chatEndRef = useRef(null); 
 
   useEffect(() => {
     axios
@@ -54,25 +54,41 @@ const FruitList = () => {
       });
   };
 
+  const handleBack = () => {
+    setSelectedFruit(null);
+    setChatHistory([]); // Clear chat history when going back
+  };
+
   return (
     <div className="container">
       {!selectedFruit ? (
         <div className="fruit-selection">
           <h2 className="text-center">Select a Fruit</h2>
-          <div className="fruit-list">
-            {fruits.map((fruit) => (
-              <div key={fruit.name} className="fruit-card" onClick={() => handleClick(fruit)}>
-                <img src={`/${fruit.image}`} alt={fruit.name} className="fruit-image" />
-                <div className="fruit-info">
-                  <h5 className="fruit-name">{fruit.name}</h5>
+          <div className="fruit-list-container"> {/* Wrapper for scrolling */}
+            <div className="fruit-list">
+              {fruits.map((fruit) => (
+                <div
+                  key={fruit.name}
+                  className="fruit-card"
+                  onClick={() => handleClick(fruit)}
+                >
+                  <img
+                    src={`/${fruit.image}`}
+                    alt={fruit.name}
+                    className="fruit-image"
+                  />
+                  <div className="fruit-info">
+                    <h5 className="fruit-name">{fruit.name}</h5>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       ) : (
         <div className="chat-container">
           <header className="chat-header">
+            <button className="back-button" onClick={handleBack}>Back</button>
             <h3>Chat about {selectedFruit.name}</h3>
           </header>
           <div className="chat-history">
@@ -110,4 +126,3 @@ const FruitList = () => {
 };
 
 export default FruitList;
-

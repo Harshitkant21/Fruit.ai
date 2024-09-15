@@ -15,6 +15,11 @@
   text-align: center;
 }
 
+.fruit-list-container {
+  max-height: 400px; /* Adjust based on your needs */
+  overflow-y: auto;
+}
+
 .fruit-list {
   display: flex;
   flex-wrap: wrap;
@@ -137,4 +142,26 @@
 
 .send-button:hover {
   background-color: #0056b3;
+}
+/* Chat Header */
+.chat-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.back-button {
+  background-color: #6c757d;
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.back-button:hover {
+  background-color: #5a6268;
 }
