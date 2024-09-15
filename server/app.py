@@ -1,8 +1,8 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 import google.generativeai as genai
-from flask_pymongo import PyMongo
-from bson.objectid import ObjectId
+from flask_pymongo import PyMongo # type: ignore
+from bson.objectid import ObjectId # type: ignore
 import os
 
 # Initialize Flask app
