@@ -87,6 +87,13 @@ const Login = () => {
                     <img src="https://img.icons8.com/ios-filled/50/000000/fingerprint.png" alt="fingerprint" />
                 </div>
             </div>
+            <div className='footer'>
+                <p><b>For login use :</b> test@gmail.com </p>
+                <p><b>For password use :</b> testing </p>
+                <p><b>For register use :</b> 1234567890 </p>
+                <p><b>For OTP use :</b> 98765 </p>
+                <p>&copy; 2024 All rights reserved</p>
+            </div>
         </div>
     );
 };

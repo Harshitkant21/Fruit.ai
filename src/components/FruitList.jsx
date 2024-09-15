@@ -7,7 +7,7 @@ const FruitList = () => {
   const [selectedFruit, setSelectedFruit] = useState(null);
   const [userMessage, setUserMessage] = useState("");
   const [chatHistory, setChatHistory] = useState([]);
-  const chatEndRef = useRef(null); 
+  const chatEndRef = useRef(null); // Reference for auto-scrolling
 
   useEffect(() => {
     axios
