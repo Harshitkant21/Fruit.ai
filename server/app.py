@@ -7,7 +7,8 @@ import os
 
 # Initialize Flask app
 app = Flask(__name__)
-CORS(app)
+# CORS(app)
+CORS(app, resources={r"/*": {"origins": "*"}})
 
 # MongoDB Atlas connection string (replace with your URI)
 app.config["MONGO_URI"] = "mongodb+srv://harshit:dWVR8m5M4ytHYzgF@cluster0.xknwq.mongodb.net/"
@@ -32,7 +33,7 @@ fruits = {
 # Define routes
 @app.route('/')
 def index():
-    return "Welcome to the FAQ API"
+    return "Welcome to my app"
 
 # GET all FAQs
 @app.route('/faqs', methods=['GET'])

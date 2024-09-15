@@ -8,21 +8,21 @@ const OtpScreen = () => {
 
     const handleChange = (event) => {
         const value = event.target.value;
-        if (/^\d*$/.test(value) && value.length <= 4) {
+        if (/^\d*$/.test(value) && value.length <= 5) {
             setOtp(value); // Only allow numeric values and max 4 digits
         }
     };
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        if (otp.length === 4) {
-            if (otp === "1234") {
+        if (otp.length === 5) {
+            if (otp === "98765") {
                 navigate('/setup'); // Redirect to setup page
             } else {
                 alert('Incorrect OTP. Please try again.');
             }
         } else {
-            alert('Please enter a 4-digit OTP.');
+            alert('Please enter a 5-digit OTP.');
         }
     };
 
@@ -48,7 +48,7 @@ const OtpScreen = () => {
                 <button
                     className="submit-btn"
                     type="submit"
-                    disabled={otp.length !== 4}
+                    disabled={otp.length !== 5}
                 >
                     Verify
                 </button>

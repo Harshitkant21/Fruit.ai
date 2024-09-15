@@ -92,7 +92,7 @@ const FruitList = () => {
   // Fetch fruits from API
   useEffect(() => {
     axios
-      .get("http://localhost:5000/fruits")
+      .get("https://fruit-ai-backend-ljio.onrender.com/fruits")
       .then((response) => {
         setFruits(Object.values(response.data));
       })
@@ -117,7 +117,7 @@ const FruitList = () => {
     ]);
 
     axios
-      .post("http://localhost:5000/chat", {
+      .post("https://fruit-ai-backend-ljio.onrender.com/chat", {
         message: userMessage,
         selectedFruit: selectedFruit ? selectedFruit.name : null,
       })

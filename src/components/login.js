@@ -5,8 +5,8 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 
 
 const Login = () => {
-    const demoEmail = "demo@example.com";
-    const demoPassword = "password123";
+    const demoEmail = "test@gmail.com";
+    const demoPassword = "testing";
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
