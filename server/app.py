@@ -65,49 +65,16 @@ def get_faq(id):
         return jsonify({'error': 'FAQ not found'}), 404
 
 # POST a new FAQ
-# @app.route('/faqs', methods=['POST'])
-# def add_faq():
-#     data = request.get_json()
-#     result = mongo.db.faqs.insert_one({
-#         'title': data.get('title'),
-#         'description': data.get('description'),
-#         'image': data.get('image'),
-#         'altText': data.get('altText')
-#     })
-#     return jsonify({'id': str(result.inserted_id)}), 201
-
-from flask_marshmallow import Marshmallow
-
-ma = Marshmallow(app)
-
-class FAQSchema(ma.Schema):
-    title = ma.String(required=True)
-    description = ma.String(required=True)
-    image = ma.String()  # Optional
-
 @app.route('/faqs', methods=['POST'])
 def add_faq():
     data = request.get_json()
-
-    # Validate data using the FAQSchema
-    schema = FAQSchema()
-    result = schema.validate(data)
-    if result:
-        return jsonify({'error': result}), 400
-
-    try:
-        # Insert data into the database
-        result = mongo.db.faqs.insert_one({
-            'title': data.get('title'),
-            'description': data.get('description'),
-            'image': data.get('image'),
-            'altText': data.get('altText')
-        })
-        return jsonify({'id': str(result.inserted_id)}), 201
-    except Exception as e:
-        # Handle database errors
-        print(f"Error inserting FAQ: {e}")
-        return jsonify({'error': 'Failed to insert FAQ'}), 500
+    result = mongo.db.faqs.insert_one({
+        'title': data.get('title'),
+        'description': data.get('description'),
+        'image': data.get('image'),
+        'altText': data.get('altText')
+    })
+    return jsonify({'id': str(result.inserted_id)}), 201
 
 # PUT (Update) an existing FAQ
 @app.route('/faqs/<id>', methods=['PUT'])

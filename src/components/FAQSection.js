@@ -19,9 +19,7 @@ const FAQSection = () => {
   useEffect(() => {
     const fetchFaqs = async () => {
       try {
-        const response = await fetch(
-          "https://fruit-ai-backend-ljio.onrender.com/faqs"
-        );
+        const response = await fetch("https://fruit-ai-backend-ljio.onrender.com/faqs");
         const data = await response.json();
         setFaqItems(data);
       } catch (error) {
@@ -104,7 +102,9 @@ const FAQSection = () => {
       if (response.ok) {
         const updatedFaq = await response.json();
         setFaqItems(
-          faqItems.map((item) => (item.id === editItem.id ? updatedFaq : item))
+          faqItems.map((item) =>
+            item.id === editItem.id ? updatedFaq : item
+          )
         );
         setShowEditForm(false);
       } else {
@@ -136,56 +136,9 @@ const FAQSection = () => {
     }
   };
 
-  // const handleNewSubmit = async (e) => {
-  //   e.preventDefault();
-
-  //   const optimisticFaq = {
-  //     id: Date.now().toString(), // Temporary ID, replace with real ID after successful creation
-  //     ...newItem,
-  //   };
-  //   setFaqItems((prevFaqItems) => [...prevFaqItems, optimisticFaq]);
-
-  //   try {
-  //     const response = await fetch("https://fruit-ai-backend-ljio.onrender.com/faqs", {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify({
-  //         title: newItem.title,
-  //         description: newItem.description,
-  //         image: newItem.image,
-  //         altText: "FAQ",
-  //       }),
-  //     });
-
-  //     if (response.ok) {
-  //       const newFaq = await response.json();
-  //       setFaqItems((prevFaqItems) =>
-  //         prevFaqItems.map((item) =>
-  //           item.id === optimisticFaq.id ? newFaq : item
-  //         )
-  //       );
-  //       setShowAddForm(false);
-  //       setNewItem({ image: "", title: "", description: "" });
-  //     } else {
-  //       console.error("Failed to create FAQ");
-  //       setFaqItems((prevFaqItems) =>
-  //         prevFaqItems.filter((item) => item.id !== optimisticFaq.id)
-  //       );
-  //     }
-  //   } catch (error) {
-  //     console.error("Error creating FAQ:", error);
-  //     setFaqItems((prevFaqItems) =>
-  //       prevFaqItems.filter((item) => item.id !== optimisticFaq.id)
-  //     );
-  //   }
-  // };
-
   const handleNewSubmit = async (e) => {
     e.preventDefault();
 
-    // Optimistic UI update: Add the new FAQ to the state before backend confirmation
     const optimisticFaq = {
       id: Date.now().toString(), // Temporary ID, replace with real ID after successful creation
       ...newItem,
@@ -193,25 +146,20 @@ const FAQSection = () => {
     setFaqItems((prevFaqItems) => [...prevFaqItems, optimisticFaq]);
 
     try {
-      // Send a POST request to the backend API
-      const response = await fetch(
-        "https://fruit-ai-backend-ljio.onrender.com/faqs",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            title: newItem.title,
-            description: newItem.description,
-            image: newItem.image,
-            altText: "FAQ",
-          }),
-        }
-      );
+      const response = await fetch("https://fruit-ai-backend-ljio.onrender.com/faqs", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          title: newItem.title,
+          description: newItem.description,
+          image: newItem.image,
+          altText: "FAQ",
+        }),
+      });
 
       if (response.ok) {
-        // Successful creation, update the FAQ with the actual ID from the backend
         const newFaq = await response.json();
         setFaqItems((prevFaqItems) =>
           prevFaqItems.map((item) =>
@@ -222,19 +170,18 @@ const FAQSection = () => {
         setNewItem({ image: "", title: "", description: "" });
       } else {
         console.error("Failed to create FAQ");
-        // Handle error, e.g., remove the optimistic FAQ from the state
         setFaqItems((prevFaqItems) =>
           prevFaqItems.filter((item) => item.id !== optimisticFaq.id)
         );
       }
     } catch (error) {
       console.error("Error creating FAQ:", error);
-      // Handle error, e.g., remove the optimistic FAQ from the state
       setFaqItems((prevFaqItems) =>
         prevFaqItems.filter((item) => item.id !== optimisticFaq.id)
       );
     }
   };
+
   return (
     <div className="faq-section">
       <h2 className="faq-section-title">FAQ Section</h2>
@@ -327,11 +274,7 @@ const FAQSection = () => {
           <form onSubmit={handleEditSubmit}>
             <label>
               Image:
-              <input
-                type="file"
-                accept="image/*"
-                onChange={handleImageChange}
-              />
+              <input type="file" accept="image/*" onChange={handleImageChange} />
               {editItem.image && (
                 <img
                   src={editItem.image}
