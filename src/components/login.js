@@ -88,6 +88,7 @@ const Login = () => {
                 </div>
             </div>
             <div className='footer'>
+                <p>&copy; 2110990576</p>
                 <p><b>For login use :</b> test@gmail.com </p>
                 <p><b>For password use :</b> testing </p>
                 <p><b>For register use :</b> 1234567890 </p>
