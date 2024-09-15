@@ -1,95 +1,14 @@
-// import React, { useState, useEffect } from "react";
-// import axios from "axios";
-// import FruitCard from "./FruitCard";
-
-// const FruitList = () => {
-//   const [fruits, setFruits] = useState([]);
-//   const [selectedFruit, setSelectedFruit] = useState(null);
-//   const [userMessage, setUserMessage] = useState("");
-//   const [chatResponse, setChatResponse] = useState("");
-
-//   useEffect(() => {
-//     axios
-//       .get("http://localhost:5000/fruits")
-//       .then((response) => {
-//         setFruits(Object.values(response.data));
-//       })
-//       .catch((error) => {
-//         console.error("Error fetching fruits:", error);
-//       });
-//   }, []);
-
-//   const handleClick = (fruit) => {
-//     setSelectedFruit(fruit);
-//   };
-
-//   const handleSendMessage = () => {
-//     if (!userMessage.trim()) return;
-  
-//     axios
-//       .post("http://localhost:5000/chat", {
-//         message: userMessage,
-//         selectedFruit: selectedFruit ? selectedFruit.name : null,
-//       })
-//       .then((response) => {
-//         const plainTextResponse = response.data.response.replace(/\*/g, "");
-//         setChatResponse(plainTextResponse);
-//         cleanup();
-//       })
-//       .catch((error) => {
-//         console.error("Error sending message:", error);
-//       });
-//   };
-  
-//   const cleanup = () => {
-//     setUserMessage("");
-//   };
-
-//   return (
-//     <div className="fruit-list">
-//       {selectedFruit ? (
-//         <FruitCard fruit={selectedFruit} />
-//       ) : (
-//         fruits.map((fruit) => (
-//           <div key={fruit.name} onClick={() => handleClick(fruit)}>
-//             <img
-//               src={`/${fruit.image}`}
-//               alt={fruit.name}
-//               className="fruit-size"
-//             />
-//             <h3>{fruit.name}</h3>
-//           </div>
-//         ))
-//       )}
-//       <div className="chat">
-//         <textarea
-//           value={userMessage}
-//           onChange={(e) => setUserMessage(e.target.value)}
-//           placeholder="Type a message..."
-//         />
-//         <button onClick={handleSendMessage}>Send</button>
-//         <div className="response">{chatResponse}</div>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default FruitList;
-
-
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
-import FruitCard from "./FruitCard";
 import "../componentCss/fruitlist.css";
-
 
 const FruitList = () => {
   const [fruits, setFruits] = useState([]);
   const [selectedFruit, setSelectedFruit] = useState(null);
   const [userMessage, setUserMessage] = useState("");
-  const [chatHistory, setChatHistory] = useState([]); // To store chat history
+  const [chatHistory, setChatHistory] = useState([]);
+  const chatEndRef = useRef(null); // Reference for auto-scrolling
 
-  // Fetch fruits from API
   useEffect(() => {
     axios
       .get("https://fruit-ai-backend-ljio.onrender.com/fruits")
@@ -101,16 +20,17 @@ const FruitList = () => {
       });
   }, []);
 
-  // Handle fruit selection
+  useEffect(() => {
+    chatEndRef.current?.scrollIntoView({ behavior: "smooth" }); // Scroll to bottom on new message
+  }, [chatHistory]);
+
   const handleClick = (fruit) => {
     setSelectedFruit(fruit);
   };
 
-  // Handle sending message
   const handleSendMessage = () => {
     if (!userMessage.trim()) return;
 
-    // Add user message to chat history
     setChatHistory((prevHistory) => [
       ...prevHistory,
       { sender: "user", message: userMessage },
@@ -123,12 +43,11 @@ const FruitList = () => {
       })
       .then((response) => {
         const plainTextResponse = response.data.response.replace(/\*/g, "");
-        // Add bot response to chat history
         setChatHistory((prevHistory) => [
           ...prevHistory,
           { sender: "bot", message: plainTextResponse },
         ]);
-        setUserMessage(""); // Clear input after message is sent
+        setUserMessage("");
       })
       .catch((error) => {
         console.error("Error sending message:", error);
@@ -137,35 +56,25 @@ const FruitList = () => {
 
   return (
     <div className="container">
-      {/* Fruit Selection */}
       {!selectedFruit ? (
-        <div className="row">
-          <h2 className="mb-3 text-center">Select a Fruit</h2>
-          {fruits.map((fruit) => (
-            <div key={fruit.name} className="col-6 col-md-4 mb-3">
-              <div
-                className="card"
-                onClick={() => handleClick(fruit)}
-                style={{ cursor: "pointer" }}
-              >
-                <img
-                  src={`/${fruit.image}`}
-                  alt={fruit.name}
-                  className="card-img-top fruit-size"
-                />
-                <div className="card-body">
-                  <h5 className="card-title text-center">{fruit.name}</h5>
+        <div className="fruit-selection">
+          <h2 className="text-center">Select a Fruit</h2>
+          <div className="fruit-list">
+            {fruits.map((fruit) => (
+              <div key={fruit.name} className="fruit-card" onClick={() => handleClick(fruit)}>
+                <img src={`/${fruit.image}`} alt={fruit.name} className="fruit-image" />
+                <div className="fruit-info">
+                  <h5 className="fruit-name">{fruit.name}</h5>
                 </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       ) : (
-        // Chat Area
         <div className="chat-container">
-          <h3 className="text-center mb-3">Chat about {selectedFruit.name}</h3>
-
-          {/* Chat History */}
+          <header className="chat-header">
+            <h3>Chat about {selectedFruit.name}</h3>
+          </header>
           <div className="chat-history">
             {chatHistory.map((chat, index) => (
               <div
@@ -177,19 +86,18 @@ const FruitList = () => {
                 {chat.message}
               </div>
             ))}
+            <div ref={chatEndRef} /> {/* Scroll reference */}
           </div>
-
-          {/* Chat Input */}
-          <div className="input-group mt-3">
+          <div className="chat-input">
             <textarea
               value={userMessage}
               onChange={(e) => setUserMessage(e.target.value)}
-              className="form-control"
+              className="input-field"
               placeholder="Type a message..."
               rows="2"
             />
             <button
-              className="btn btn-primary"
+              className="send-button"
               onClick={handleSendMessage}
             >
               Send
@@ -202,3 +110,4 @@ const FruitList = () => {
 };
 
 export default FruitList;
+

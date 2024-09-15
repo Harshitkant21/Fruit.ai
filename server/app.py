@@ -23,10 +23,78 @@ model = genai.GenerativeModel("gemini-1.5-flash")
 
 # Sample data for fruits
 fruits = {
-    "apple": {"name": "Apple", "description": "A sweet, crunchy fruit.", "image": "images/apple.jpg"},
-    "banana": {"name": "Banana", "description": "A soft, yellow fruit.", "image": "images/banana.jpg"},
-    # Add more fruits as needed
+  "apple": {
+    "name": "Apple",
+    "description": "A crisp, sweet fruit, often red or green.",
+    "image": "images/apple.jpg"
+  },
+  "orange": {
+    "name": "Orange",
+    "description": "A juicy, tangy fruit with a bright orange skin.",
+    "image": "images/orange.jpg"
+  },
+  "grape": {
+    "name": "Grape",
+    "description": "Small, round fruit that can be red, green, or purple.",
+    "image": "images/grape.jpg"
+  },
+  "pineapple": {
+    "name": "Pineapple",
+    "description": "A tropical fruit with a tough, spiky exterior and sweet, juicy interior.",
+    "image": "images/pineapple.jpg"
+  },
+  "strawberry": {
+    "name": "Strawberry",
+    "description": "A red, juicy fruit with tiny seeds on its surface.",
+    "image": "images/strawberry.jpg"
+  },
+  "kiwi": {
+    "name": "Kiwi",
+    "description": "A small, brown, fuzzy fruit with green flesh and tiny black seeds.",
+    "image": "images/kiwi.jpg"
+  },
+  "mango": {
+    "name": "Mango",
+    "description": "A tropical fruit with a sweet, juicy flesh and a large pit.",
+    "image": "images/mango.jpg"
+  },
+  "blueberry": {
+    "name": "Blueberry",
+    "description": "Small, round berries that are blue to purple in color and very sweet.",
+    "image": "images/blueberry.jpg"
+  },
+  "peach": {
+    "name": "Peach",
+    "description": "A juicy fruit with a fuzzy skin and a large pit, typically yellow or red.",
+    "image": "images/peach.jpg"
+  },
+  "watermelon": {
+    "name": "Watermelon",
+    "description": "A large, green fruit with a sweet, juicy, red interior and black seeds.",
+    "image": "images/watermelon.jpg"
+  },
+  "pear": {
+    "name": "Pear",
+    "description": "A sweet fruit with a rounded base and a tapering top.",
+    "image": "images/pear.jpg"
+  },
+  "cherry": {
+    "name": "Cherry",
+    "description": "A small, round fruit that is typically red or black and very sweet.",
+    "image": "images/cherry.jpg"
+  },
+  "plum": {
+    "name": "Plum",
+    "description": "A round fruit with a smooth skin that can be red, purple, or yellow, and a tart flavor.",
+    "image": "images/plum.jpg"
+  },
+  "banana": {
+    "name": "Banana",
+    "description": "A long, curved fruit with a yellow skin and soft, sweet flesh.",
+    "image": "images/banana.jpg"
+    }
 }
+
 
 
 # Define routes
