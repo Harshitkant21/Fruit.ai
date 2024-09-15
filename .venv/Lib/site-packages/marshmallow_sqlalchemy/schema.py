@@ -1,6 +1,6 @@
+import sqlalchemy as sa
 from marshmallow.fields import Field
 from marshmallow.schema import Schema, SchemaMeta, SchemaOpts
-import sqlalchemy as sa
 from sqlalchemy.ext.declarative import DeclarativeMeta
 
 from .convert import ModelConverter
@@ -152,6 +152,7 @@ class SQLAlchemySchema(
 
         from mymodels import User
 
+
         class UserSchema(SQLAlchemySchema):
             class Meta:
                 model = User
@@ -173,6 +174,7 @@ class SQLAlchemyAutoSchema(SQLAlchemySchema, metaclass=SQLAlchemyAutoSchemaMeta)
         from marshmallow_sqlalchemy import SQLAlchemyAutoSchema, auto_field
 
         from mymodels import User
+
 
         class UserSchema(SQLAlchemyAutoSchema):
             class Meta:

@@ -5,7 +5,9 @@
     This module is treated as private API.
     Users should not need to use this module directly.
 """
+
 import marshmallow as ma
+from sqlalchemy.orm.exc import ObjectDeletedError
 
 from .fields import get_primary_keys
 
@@ -55,7 +57,10 @@ class LoadInstanceMixin:
             props = get_primary_keys(self.opts.model)
             filters = {prop.key: data.get(prop.key) for prop in props}
             if None not in filters.values():
-                return self.session.query(self.opts.model).filter_by(**filters).first()
+                try:
+                    return self.session.get(self.opts.model, filters)
+                except ObjectDeletedError:
+                    return None
             return None
 
         @ma.post_load
