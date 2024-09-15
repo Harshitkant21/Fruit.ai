@@ -1,0 +1,2 @@
+[console_scripts]
+split-image = split_image.split:main
